@@ -2,68 +2,211 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Email Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${subject}">Email Template</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        /* Reset styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container styles */
+        .email-wrapper {
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+        }
+
         .email-container {
             max-width: 600px;
-            margin: 20px auto;
+            margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
+
+        /* Logo section */
+        .logo-section {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #f8f9fa;
+        }
+
+        .logo-section img {
+            max-height: 50px;
+            width: auto;
+        }
+
+        /* Header styles */
         .header {
             text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #dddddd;
+            padding: 30px 40px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #edf2f7;
         }
+
         .header h1 {
-            color: #333333;
+            color: #1a202c;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.4;
             margin: 0;
         }
+
+        /* Content styles */
         .content {
-            padding: 20px 0;
+            padding: 40px;
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 16px;
         }
+
         .content p {
-            color: #555555;
-            line-height: 1.6;
+            margin-bottom: 20px;
         }
-        .footer {
+
+        /* Button styles */
+        .button-container {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #dddddd;
-            color: #888888;
-            font-size: 12px;
+            margin: 30px 0;
         }
+
         .button {
             display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background-color: #007bff;
-            color: #ffffff;
+            padding: 12px 24px;
+            background-color: #4F46E5;
+            color: #ffffff !important;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #4338CA;
+        }
+
+        /* Info box styles */
+        .info-box {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h2 {
+            color: #1a202c;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            padding: 30px 40px;
+            background-color: #f8f9fa;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-link {
+            display: inline-block;
+            margin: 0 10px;
+            color: #718096;
+            text-decoration: none;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                border-radius: 0;
+            }
+
+            .header, .content, .footer {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="email-container">
-    <div class="header">
-        <h1 th:text="${subject}">Sujet de l'Email</h1>
-    </div>
-    <div class="content">
-        <p th:text="${content}">Contenu de l'email.</p>
-        <a th:href="${actionUrl}" class="button" th:text="${actionText}">Action</a>
-    </div>
-    <div class="footer">
-        <p>Merci de nous faire confiance.</p>
-        <p>© 2025 ASMAS Tous droits réservés.</p>
+<div class="email-wrapper">
+    <div class="email-container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img th:src="${logoUrl}" alt="Company Logo"
+                 src="https://placeholder.com/wp-content/uploads/2018/10/placeholder.com-logo1.png">
+        </div>
+
+        <!-- Header Section -->
+        <div class="header">
+            <h1 th:text="${subject}">Welcome to Our Service</h1>
+        </div>
+
+        <!-- Content Section -->
+        <div class="content">
+            <!-- Greeting -->
+            <p th:text="${'Dear ' + (recipientName ?: 'Valued Customer') + ','}"
+            >Dear Valued Customer,</p>
+
+            <!-- Main Content -->
+            <p th:utext="${content}">Your email content goes here.</p>
+
+            <!-- Action Button -->
+            <div class="button-container" th:if="${actionUrl != null and actionText != null}">
+                <a th:href="${actionUrl}" class="button" th:text="${actionText}">Take Action</a>
+            </div>
+
+            <!-- Optional Info Box -->
+            <div class="info-box" th:if="${additionalInfo != null}">
+                <h2>Additional Information</h2>
+                <p th:utext="${additionalInfo}">Additional details can go here.</p>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer">
+            <div class="social-links">
+                <a th:if="${socialLinks?.facebook}" th:href="${socialLinks.facebook}" class="social-link">Facebook</a>
+                <a th:if="${socialLinks?.twitter}" th:href="${socialLinks.twitter}" class="social-link">Twitter</a>
+                <a th:if="${socialLinks?.linkedin}" th:href="${socialLinks.linkedin}" class="social-link">LinkedIn</a>
+            </div>
+            <p>If you have any questions, please don't hesitate to contact us.</p>
+            <p th:text="${'© ' + #dates.year(#dates.createNow()) + ' ' + companyName + '. All rights reserved.'}"
+            >© 2025 ASMAS. All rights reserved.</p>
+            <p th:if="${unsubscribeUrl != null}">
+                <a th:href="${unsubscribeUrl}" style="color: #718096;">Unsubscribe</a>
+            </p>
+        </div>
     </div>
 </div>
 </body>
