@@ -21,11 +21,11 @@ pipeline {
                 )
             }
         }
-         /*stage('Build & Deploy') {
+         stage('Build & Deploy') {
             steps {
                 sh 'mvn clean install -DskipTests=true'
             }
-        }*/
+        }
 
         stage('Prepare Dependencies') {
             steps {
@@ -38,11 +38,11 @@ pipeline {
             }
         }
 
-       /* stage('test_Unitaire') {
+       stage('test_Unitaire') {
             steps {
                 sh "mvn test -X"
             }
-        }*/
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -85,7 +85,25 @@ pipeline {
                 }
             }
         }
-
+stage('Deploy to EKS') {
+            steps {
+                script {
+                   withCredentials([aws(credentialsId: 'aws-credentials')]) {
+                     
+                      //Authentification
+                        sh """
+                            aws eks update-kubeconfig --name main-eks-cluster --region ${AWS_REGION} 
+                        """
+                       // Déploiement des ressources
+                        sh """
+                          kubectl apply -f k8s/notification-deployement.yaml
+                           kubectl apply -f k8s/notification-deployement.yaml
+                           kubectl apply -f k8s/notification-service.yaml
+                        """
+                    }
+                }
+            }
+        }
         stage('Cleanup') {
             steps {
                 script {
