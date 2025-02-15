@@ -20,7 +20,6 @@ public class LocalEmailService implements EmailSender {
             emailService.sendHtmlEmail(to, subject, content, actionUrl, actionText);
         } catch (Exception e) {
             e.printStackTrace();
-            // Gérer l'erreur (ex: journaliser l'erreur)
         }
     }
 }
