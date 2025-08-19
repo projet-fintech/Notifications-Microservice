@@ -27,9 +27,9 @@ spec:
             - name: SPRING_MAIL_PORT
               value: "587"
             - name: SPRING_MAIL_USERNAME
-              value: "mouadrguibi900@gmail.com"
+              value: "$$$$$$$$$$$$$"
             - name: SPRING_MAIL_PASSWORD
-              value: "dhkftzoymiikjsil"
+              value: "$$$$$$$$$$$$$$$$$$"
             - name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH
               value: "true"
             - name: SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE
@@ -50,3 +50,4 @@ spec:
               value: "update"
             - name: SPRING_JPA_SHOW_SQL
               value: "true"
+
